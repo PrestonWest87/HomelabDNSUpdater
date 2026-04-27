@@ -44,20 +44,27 @@ In Google Cloud, the "Zone Name" is the internal ID you gave the zone, *not* you
 Create a `docker-compose.yml` file on your server:
 
 ```yaml
-version: '3.8'
-
 services:
-  gcp-ddns:
-    image: yourdockerhubusername/gcp-ddns-updater:latest
-    container_name: gcp-ddns-updater
+  hybrid-ddns:
+    image: yourdockerhubusername/hybrid-ddns-updater:latest
+    container_name: hybrid-ddns-updater
     restart: unless-stopped
     volumes:
-      # Map your downloaded GCP JSON key to the container
+      # Required only if utilizing GCP
       - /path/to/your/credentials.json:/secrets/credentials.json:ro
     environment:
-      - GCP_PROJECT_ID=your-project-id
-      - GCP_ZONE_NAME=your-zone-name
-      - GCP_DOMAIN_NAME=example.com,*.example.com
+      # -- GCP Configuration --
+      - GCP_PROJECT_ID=your-gcp-project-id
+      - GCP_ZONE_NAME=your-gcp-zone
+      - GCP_DOMAIN_NAMES=gcp.example.com
+      
+      # -- Cloudflare Configuration --
+      - CLOUDFLARE_DOMAIN_NAMES=cf.example.com
+      - CLOUDFLARE_API_TOKEN=your-cloudflare-api-token
+      - CLOUDFLARE_ZONE_ID=your-cloudflare-zone-id
+      - CLOUDFLARE_PROXIED=false
+      
+      # -- Global Settings --
       - DNS_TTL=300
       - CHECK_INTERVAL=300
 
