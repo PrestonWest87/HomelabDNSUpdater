@@ -53,6 +53,7 @@ services:
       - /path/to/your/credentials.json:/secrets/credentials.json:ro
     environment:
       # -- GCP Configuration --
+      - GOOGLE_APPLICATION_CREDENTIALS=/secrets/credentials.json
       - GCP_PROJECT_ID=your-gcp-project-id
       - GCP_ZONE_NAME=your-gcp-zone
       - GCP_DOMAIN_NAMES=gcp.example.com
