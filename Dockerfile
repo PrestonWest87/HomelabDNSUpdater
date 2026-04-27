@@ -15,6 +15,7 @@ COPY dynamic_dns.py .
 RUN chown -R ddnsuser:ddnsuser /app
 USER ddnsuser
 
-ENV GOOGLE_APPLICATION_CREDENTIALS=/secrets/credentials.json
+# Removed the hardcoded GOOGLE_APPLICATION_CREDENTIALS environment variable.
+# It should now be passed via docker-compose or the docker run command.
 
 CMD ["python3", "dynamic_dns.py"]
