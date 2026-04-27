@@ -50,7 +50,6 @@ services:
     container_name: hybrid-ddns-updater
     restart: unless-stopped
     volumes:
-      # Required only if utilizing GCP
       - /path/to/your/credentials.json:/secrets/credentials.json:ro
     environment:
       # -- GCP Configuration --
