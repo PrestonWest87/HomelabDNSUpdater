@@ -1,0 +1,9 @@
+Release v1.0.0: Hybrid GCP + Cloudflare DDNS Updater
+
+## Features
+- Add Cloudflare DNS support alongside Google Cloud DNS
+- Multi-provider support
+- Comprehensive documentation added
+- Smart updates: only push changes when IP mismatch detected
+
+Docker Hub: https://hub.docker.com/repository/docker/weasts/gcp-ddns-updater
