@@ -1,0 +1,54 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read RELEASE.md
+        id: release
+        run: |
+          if [ -f RELEASE.md ]; then
+            echo "body<<EOF" >> $GITHUB_OUTPUT
+            cat RELEASE.md >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "body=Release ${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body: ${{ steps.release.outputs.body }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update Release with Docker Info
+        uses: softprops/action-gh-release@v2
+        with:
+          body: |
+            ${{ steps.release.outputs.body }}
+
+            ## Docker Images
+            ```bash
+            docker pull weasts/gcp-ddns-updater:${{ github.ref_name }}
+            docker pull weasts/gcp-ddns-updater:latest
+            ```
+
+            **Docker Hub:** https://hub.docker.com/repository/docker/weasts/gcp-ddns-updater
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
