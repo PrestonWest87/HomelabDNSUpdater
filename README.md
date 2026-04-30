@@ -53,7 +53,7 @@ Create a `docker-compose.yml` file on your server:
 ```yaml
 services:
   hybrid-ddns:
-    image: yourdockerhubusername/hybrid-ddns-updater:latest
+    image: weasts/gcp-ddns-updater:latest
     container_name: hybrid-ddns-updater
     restart: unless-stopped
     volumes:
@@ -96,7 +96,7 @@ docker run -d \
   -e GCP_DOMAIN_NAMES="example.com,*.example.com" \
   -e DNS_TTL="300" \
   -e CHECK_INTERVAL="300" \
-  yourdockerhubusername/hybrid-ddns-updater:latest
+  weasts/gcp-ddns-updater:latest
 ```
 
 ### Option 3: Standard Docker Run (Cloudflare Only)
@@ -111,7 +111,7 @@ docker run -d \
   -e CLOUDFLARE_PROXIED="false" \
   -e DNS_TTL="300" \
   -e CHECK_INTERVAL="300" \
-  yourdockerhubusername/hybrid-ddns-updater:latest
+  weasts/gcp-ddns-updater:latest
 ```
 
 ## Troubleshooting

@@ -103,7 +103,7 @@ Reference in docker-compose.yml:
 ```yaml
 services:
   hybrid-ddns:
-    image: prestonwest87/hybrid-ddns-updater:latest
+    image: weasts/gcp-ddns-updater:latest
     env_file: .env
     volumes:
       - /path/to/credentials.json:/secrets/credentials.json:ro
